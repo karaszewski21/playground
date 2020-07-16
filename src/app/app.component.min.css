@@ -1,1 +1,1 @@
-.container{display:flex;flex-direction:column;border:solid 1px red}.nav{border:solid 1px red}.footer{border:solid 1px red}
+.container{display:flex;flex-direction:column;border:solid 1px red}.nav{display:flex;align-items:center;border:solid 1px red}.footer{border:solid 1px red}
