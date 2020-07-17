@@ -1,3 +1,6 @@
 export interface Crossword {
-  crossword: string[][];
+  password: string;
+  positionPassword: number;
+  widthLeft: number;
+  widthRight: number;
 }

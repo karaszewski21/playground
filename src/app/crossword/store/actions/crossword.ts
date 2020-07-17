@@ -1,4 +1,6 @@
 import { Action } from '@ngrx/store';
+import { Crossword } from '../../../model/crossword';
+import { CrosswordItem } from '../../../model/crosswordItem';
 
 export enum CrosswordActionTypes {
   Create = 'Tworzenie krzyzowki [Crossword]',
@@ -12,7 +14,12 @@ export class CreateCrossword implements Action {
 
 export class CreateSuccessCrossword implements Action {
   readonly type = CrosswordActionTypes.CreateSuccess;
-  constructor(public readonly payload: { crossword: string[] }) {}
+  constructor(
+    public readonly payload: {
+      crossword: Crossword;
+      crosswordItems: CrosswordItem[];
+    }
+  ) {}
 }
 
 export type CrosswordActions = CreateCrossword | CreateSuccessCrossword;
