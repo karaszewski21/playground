@@ -1,7 +1,7 @@
-import { Crossword } from '../../../model/crossword';
 import { CrosswordActions, CreateCrossword, CrosswordActionTypes } from '..';
-import { CrosswordItem } from '../../../model/crosswordItem';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { Crossword } from '../../model/crossword';
+import { CrosswordItem } from '../../model/crosswordItem';
 
 export interface State {
   crossword?: Crossword;

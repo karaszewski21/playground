@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { Crossword } from '../../model/crossword';
 import { FormControl } from '@angular/forms';
 import { CreateCrossword } from '../store';
+import { Crossword } from '../model/crossword';
 
 @Component({
   selector: 'app-crossword-password',

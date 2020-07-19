@@ -4,11 +4,11 @@ import {
   CreateSuccessCrossword,
   CreateCrossword,
 } from '../actions/crossword';
-import { CrosswordService } from '../../../service/crossword.service';
 import { Action } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { catchError, map, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { Actions, Effect, ofType } from '@ngrx/effects';
+import { CrosswordService } from '../../service/crossword.service';
 
 @Injectable()
 export class CrosswordEffects {

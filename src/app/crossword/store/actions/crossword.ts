@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
-import { Crossword } from '../../../model/crossword';
-import { CrosswordItem } from '../../../model/crosswordItem';
+import { Crossword } from '../../model/crossword';
+import { CrosswordItem } from '../../model/crosswordItem';
 
 export enum CrosswordActionTypes {
   Create = 'Tworzenie krzyzowki [Crossword]',

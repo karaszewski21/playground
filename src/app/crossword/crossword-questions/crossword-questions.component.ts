@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { getCrosswordItems } from '../store';
 import { Observable } from 'rxjs';
-import { CrosswordItem } from '../../model/crosswordItem';
+import { CrosswordItem } from '../model/crosswordItem';
 
 @Component({
   selector: 'app-crossword-questions',

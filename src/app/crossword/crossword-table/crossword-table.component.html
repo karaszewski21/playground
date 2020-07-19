@@ -1,1 +1,7 @@
-<p>crossword-table works!</p>
+<table>
+  <tbody>
+    <tr *ngFor="let crosswordItem of crosswordItems$ | async">
+      <app-crossword-row-table></app-crossword-row-table>
+    </tr>
+  </tbody>
+</table>
