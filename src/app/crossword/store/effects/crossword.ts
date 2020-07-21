@@ -3,6 +3,10 @@ import {
   CrosswordActionTypes,
   CreateSuccessCrossword,
   CreateCrossword,
+  UpdateSuccessCrossword,
+  UpdateCrossword,
+  AddCrosswordItem,
+  AddCrosswordItemSuccess,
 } from '../actions/crossword';
 import { Action } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
@@ -12,7 +16,6 @@ import { CrosswordService } from '../../service/crossword.service';
 
 @Injectable()
 export class CrosswordEffects {
-  cossword: string[][];
   @Effect()
   createCrosswordByPassword$: Observable<Action> = this.actions$.pipe(
     ofType<CreateCrossword>(CrosswordActionTypes.Create),
@@ -24,6 +27,30 @@ export class CrosswordEffects {
       ({ crossword, crosswordItems }) =>
         new CreateSuccessCrossword({ crossword, crosswordItems })
     )
+  );
+
+  @Effect()
+  updateCrossword$: Observable<Action> = this.actions$.pipe(
+    ofType<UpdateCrossword>(CrosswordActionTypes.Update),
+    map((action) => action.payload.crosswordItem),
+    tap((crosswordItem) => console.log(crosswordItem)),
+    map((crosswordItem) =>
+      this.crosswordService.updateCrossword(crosswordItem)
+    ),
+    tap((crossword) => console.log(crossword)),
+    map((crossword) => new UpdateSuccessCrossword({ crossword }))
+  );
+
+  @Effect()
+  addCrosswordItem$: Observable<Action> = this.actions$.pipe(
+    ofType<UpdateCrossword>(CrosswordActionTypes.AddCrosswordItem),
+    map((action) => action.payload.crosswordItem),
+    tap((crosswordItem) => console.log(crosswordItem)),
+    map((crosswordItem) =>
+      this.crosswordService.addCrossItemToList(crosswordItem)
+    ),
+    tap((crossword) => console.log(crossword)),
+    map((crosswordItems) => new AddCrosswordItemSuccess({ crosswordItems }))
   );
 
   constructor(

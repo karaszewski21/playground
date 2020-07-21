@@ -1,1 +1,8 @@
-<p>crossword-question works!</p>
+<textarea [formControl]="textArea"></textarea>
+<input type="text" [formControl]="formControl" />
+
+<app-crossword-letter-question
+  *ngFor="let letter of answer; index as i"
+  [letter]="letter"
+  (checkLetter)="checkLetter($event)"
+></app-crossword-letter-question>

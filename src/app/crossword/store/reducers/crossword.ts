@@ -14,17 +14,24 @@ const initialState: State = {
 
 export function reducer(state = initialState, action: CrosswordActions) {
   switch (action.type) {
-    // case CrosswordActionTypes.Create: {
-    //   return {
-    //     ...state,
-    //     selected: action.payload.password,
-    //   };
-    // }
-
     case CrosswordActionTypes.CreateSuccess: {
       return {
         ...state,
         crossword: action.payload.crossword,
+        crosswordItems: action.payload.crosswordItems,
+      };
+    }
+
+    case CrosswordActionTypes.UpdateSuccess: {
+      return {
+        ...state,
+        crossword: action.payload.crossword,
+      };
+    }
+
+    case CrosswordActionTypes.AddCrosswordItemSuccess: {
+      return {
+        ...state,
         crosswordItems: action.payload.crosswordItems,
       };
     }

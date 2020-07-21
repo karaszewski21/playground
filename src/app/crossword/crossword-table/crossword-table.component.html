@@ -1,7 +1,9 @@
 <table>
   <tbody>
     <tr *ngFor="let crosswordItem of crosswordItems$ | async">
-      <app-crossword-row-table></app-crossword-row-table>
+      <app-crossword-row-table
+        [crosswordItem]="crosswordItem"
+      ></app-crossword-row-table>
     </tr>
   </tbody>
 </table>

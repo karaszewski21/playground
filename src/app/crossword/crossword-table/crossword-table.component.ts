@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { getCrosswordItems } from '../store';
+import { getCrosswordItems, getCrossword } from '../store';
 import { Observable } from 'rxjs';
 import { CrosswordItem } from '../model/crosswordItem';
 
@@ -15,5 +15,6 @@ export class CrosswordTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.crosswordItems$ = this.store.select(getCrosswordItems);
+    console.log(this.crosswordItems$);
   }
 }

@@ -12,6 +12,7 @@ import { StoreModule } from '@ngrx/store';
 import { CrosswordEffects, reducer } from './store';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CrosswordRowTableComponent } from './crossword-row-table/crossword-row-table.component';
+import { CrosswordLetterQuestionComponent } from './crossword-letter-question/crossword-letter-question.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { CrosswordRowTableComponent } from './crossword-row-table/crossword-row-
     CrosswordQuestionsComponent,
     CrosswordQuestionComponent,
     CrosswordRowTableComponent,
+    CrosswordLetterQuestionComponent,
   ],
   imports: [
     CommonModule,
