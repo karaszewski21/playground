@@ -32,12 +32,14 @@ export class CrosswordService {
       widthRight: 0,
     };
 
-    [...password].forEach((value) => {
+    [...password].forEach((value, index) => {
       let crosswordItem: CrosswordItem = {
+        positionCrossword: index,
         anwser: '',
         question: '',
         positionPassword: 0,
         searchLetter: value,
+        hidden: true,
       };
 
       crosswordItems.push(crosswordItem);
@@ -46,20 +48,150 @@ export class CrosswordService {
     return { crossword, crosswordItems };
   }
 
+  public hiddenAnswer(enableMode: boolean): CrosswordItem[] {
+    let crosswordItem: CrosswordItem;
+    let crosswordItems: CrosswordItem[] = [];
+
+    this.crosswordItems.forEach((element) => {
+      crosswordItem = {
+        positionCrossword: element.positionCrossword,
+        anwser: element.anwser,
+        question: element.question,
+        searchLetter: element.searchLetter,
+        positionPassword: element.positionPassword,
+        hidden: enableMode,
+      };
+      crosswordItems.push(crosswordItem);
+    });
+
+    return crosswordItems;
+  }
+
   public generateRowFromCrosswordItem(crosswordItem: CrosswordItem): string[] {
-    if (crosswordItem.anwser.length === 0) {
-      return [...crosswordItem.searchLetter];
+    let row: string[] = [];
+
+    console.log(crosswordItem);
+    if (!crosswordItem.hidden) {
+      // if (crosswordItem.anwser.length === 0) {
+      //   let wLeft = crosswordItem.anwser.slice(
+      //     0,
+      //     crosswordItem.positionPassword
+      //   ).length;
+
+      //   let spaceForPassword = crosswordItem.positionPassword;
+      //   ++spaceForPassword;
+
+      //   let wRight = crosswordItem.anwser.slice(
+      //     spaceForPassword,
+      //     crosswordItem.anwser.length
+      //   ).length;
+
+      //   for (let index = 0; index < wLeft; index++) {
+      //     row.unshift('');
+      //   }
+      //   ``;
+
+      //   row = [...row, ...crosswordItem.searchLetter];
+
+      //   for (let index = 0; index < wRight; index++) {
+      //     row.push('');
+      //   }
+
+      //   return row;
+      // }
+      // let wLeft = crosswordItem.anwser.slice(0, this.crossword.positionPassword)
+      //   .length;
+
+      let spaceForPassword = this.crossword.positionPassword;
+      ++spaceForPassword;
+
+      // let wRight = crosswordItem.anwser.slice(
+      //   spaceForPassword,
+      //   crosswordItem.anwser.length
+      // ).length;
+
+      for (let index = 0; index < this.crossword.widthLeft; index++) {
+        row.unshift('');
+      }
+
+      row = [...row, ...crosswordItem.searchLetter];
+
+      for (let index = 0; index < this.crossword.widthRight; index++) {
+        row.push('');
+      }
+
+      return row;
     } else {
-      return [...crosswordItem.anwser];
+      if (crosswordItem.anwser.length === 0) {
+        let wLeft = crosswordItem.anwser.slice(
+          0,
+          crosswordItem.positionPassword
+        ).length;
+
+        let spaceForPassword = crosswordItem.positionPassword;
+        ++spaceForPassword;
+
+        let wRight = crosswordItem.anwser.slice(
+          spaceForPassword,
+          crosswordItem.anwser.length
+        ).length;
+
+        for (let index = 0; index < wLeft; index++) {
+          row.unshift('');
+        }
+        ``;
+
+        row = [...row, ...crosswordItem.searchLetter];
+
+        for (let index = 0; index < wRight; index++) {
+          row.push('');
+        }
+
+        return row;
+      } else {
+        let wLeft = crosswordItem.anwser.slice(
+          0,
+          crosswordItem.positionPassword
+        ).length;
+
+        let spaceForPassword = crosswordItem.positionPassword;
+        ++spaceForPassword;
+
+        let wRight = crosswordItem.anwser.slice(
+          spaceForPassword,
+          crosswordItem.anwser.length
+        ).length;
+
+        let stepLeft = this.crossword.widthLeft - wLeft;
+        let stepRight = this.crossword.widthRight - wRight;
+
+        for (let index = 0; index < stepLeft; index++) {
+          row.unshift('');
+        }
+
+        row = [...row, ...crosswordItem.anwser];
+
+        for (let index = 0; index < stepRight; index++) {
+          row.push('');
+        }
+        return row;
+      }
     }
   }
 
   public updateCrossword(crosswordItem: CrosswordItem): Crossword {
-    let crossword = this.crossword;
+    let crossword: Crossword = {
+      password: this.crossword.password,
+      positionPassword: this.crossword.positionPassword,
+      widthLeft: this.crossword.widthLeft,
+      widthRight: this.crossword.widthRight,
+    };
+
     let wLeft = crosswordItem.anwser.slice(0, crosswordItem.positionPassword)
       .length;
 
-    let spaceForPassword = ++crosswordItem.positionPassword;
+    let spaceForPassword = crosswordItem.positionPassword;
+    ++spaceForPassword;
 
     let wRight = crosswordItem.anwser.slice(
       spaceForPassword,
@@ -70,6 +202,10 @@ export class CrosswordService {
       crossword.widthLeft = wLeft;
     }
 
+    if (crosswordItem.positionPassword > crossword.positionPassword) {
+      crossword.positionPassword = crosswordItem.positionPassword;
+    }
+
     if (wRight > crossword.widthRight) {
       crossword.widthRight = wRight;
     }
@@ -77,9 +213,36 @@ export class CrosswordService {
     return crossword;
   }
 
-  public addCrossItemToList(crosswordItem: CrosswordItem): CrosswordItem[] {
-    let crosswordItems = this.crosswordItems;
+  public addCrossItemToList(
+    position: number,
+    hidden: boolean,
+    crosswordItem: CrosswordItem
+  ): CrosswordItem[] {
+    let crosswordItems: CrosswordItem[] = [];
 
+    this.crosswordItems.forEach((element) => {
+      let crosswordItem: CrosswordItem = {
+        positionCrossword: element.positionCrossword,
+        anwser: element.anwser,
+        question: element.question,
+        searchLetter: element.searchLetter,
+        positionPassword: element.positionPassword,
+        hidden: element.hidden,
+      };
+      crosswordItems.push(crosswordItem);
+    });
+
+    let addedcCrosswordItem: CrosswordItem = {
+      positionCrossword: crosswordItem.positionCrossword,
+      anwser: crosswordItem.anwser,
+      question: crosswordItem.question,
+      positionPassword: crosswordItem.positionPassword,
+      searchLetter: crosswordItem.searchLetter,
+      hidden: hidden ?? crosswordItem.hidden,
+    };
+
+    crosswordItems[position] = addedcCrosswordItem;
+    console.log(crosswordItems);
     return crosswordItems;
   }
 }

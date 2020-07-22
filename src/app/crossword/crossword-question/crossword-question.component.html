@@ -1,8 +1,17 @@
-<textarea [formControl]="textArea"></textarea>
-<input type="text" [formControl]="formControl" />
+<div *ngIf="crosswordItem.hidden; then thenBlock; else elseBlock"></div>
+<ng-template #thenBlock>
+  <textarea [formControl]="textAreaControl"></textarea>
+  <input type="text" [formControl]="orginAnswerControl" />
 
-<app-crossword-letter-question
-  *ngFor="let letter of answer; index as i"
-  [letter]="letter"
-  (checkLetter)="checkLetter($event)"
-></app-crossword-letter-question>
+  <app-crossword-letter-question
+    *ngFor="let letter of answer; index as i"
+    [position]="i"
+    [letter]="letter"
+    (checkLetter)="checkLetter($event)"
+  ></app-crossword-letter-question>
+</ng-template>
+<ng-template #elseBlock>
+  <textarea [formControl]="textAreaControl"></textarea>
+  <input type="text" [formControl]="answerToAdded" />
+  <button (click)="checkAnsweForCrossword()">Sprawdz</button>
+</ng-template>

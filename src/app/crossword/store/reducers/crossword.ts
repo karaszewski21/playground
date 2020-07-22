@@ -36,6 +36,13 @@ export function reducer(state = initialState, action: CrosswordActions) {
       };
     }
 
+    case CrosswordActionTypes.HiddenAnserSuccess: {
+      return {
+        ...state,
+        crosswordItems: action.payload.crosswordItems,
+      };
+    }
+
     default: {
       return state;
     }

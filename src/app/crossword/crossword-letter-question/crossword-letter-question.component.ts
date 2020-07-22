@@ -14,6 +14,7 @@ import {
   styleUrls: ['./crossword-letter-question.component.scss'],
 })
 export class CrosswordLetterQuestionComponent implements OnInit {
+  @Input() position: number;
   @Input() letter: string;
   @Output() checkLetter = new EventEmitter<any>();
   selected: boolean = false;

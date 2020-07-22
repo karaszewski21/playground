@@ -7,6 +7,8 @@ import {
   UpdateCrossword,
   AddCrosswordItem,
   AddCrosswordItemSuccess,
+  ModeHiddenSuccess,
+  ModeHidden,
 } from '../actions/crossword';
 import { Action } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
@@ -43,14 +45,24 @@ export class CrosswordEffects {
 
   @Effect()
   addCrosswordItem$: Observable<Action> = this.actions$.pipe(
-    ofType<UpdateCrossword>(CrosswordActionTypes.AddCrosswordItem),
-    map((action) => action.payload.crosswordItem),
-    tap((crosswordItem) => console.log(crosswordItem)),
-    map((crosswordItem) =>
-      this.crosswordService.addCrossItemToList(crosswordItem)
+    ofType<AddCrosswordItem>(CrosswordActionTypes.AddCrosswordItem),
+    map((action) => action.payload),
+    tap((payload) => console.log(payload)),
+    map(({ position, hidden, crosswordItem }) =>
+      this.crosswordService.addCrossItemToList(position, hidden, crosswordItem)
     ),
-    tap((crossword) => console.log(crossword)),
+    tap((crosswordItems) => console.log(crosswordItems)),
     map((crosswordItems) => new AddCrosswordItemSuccess({ crosswordItems }))
+  );
+
+  @Effect()
+  enableModeHidden$: Observable<Action> = this.actions$.pipe(
+    ofType<ModeHidden>(CrosswordActionTypes.HiddenAnser),
+    map((action) => action.payload.mode),
+    tap((payload) => console.log(payload)),
+    map((mode) => this.crosswordService.hiddenAnswer(mode)),
+    tap((crosswordItems) => console.log(crosswordItems)),
+    map((crosswordItems) => new ModeHiddenSuccess({ crosswordItems }))
   );
 
   constructor(
