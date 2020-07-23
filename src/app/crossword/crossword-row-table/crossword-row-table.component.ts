@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { CrosswordService } from '../service/crossword.service';
 import { CrosswordItem } from '../model/crosswordItem';
+import { Crossword } from '../model/crossword';
 
 @Component({
   selector: 'app-crossword-row-table',
@@ -15,9 +16,10 @@ import { CrosswordItem } from '../model/crosswordItem';
 })
 export class CrosswordRowTableComponent implements OnInit, OnChanges {
   constructor(private crosswordService: CrosswordService) {}
+  rowCrossword: string[];
 
   @Input() crosswordItem: CrosswordItem;
-  rowCrossword: string[];
+  @Input() crossword: Crossword;
 
   ngOnInit(): void {}
 
@@ -25,7 +27,5 @@ export class CrosswordRowTableComponent implements OnInit, OnChanges {
     this.rowCrossword = this.crosswordService.generateRowFromCrosswordItem(
       changes.crosswordItem.currentValue
     );
-
-    console.log(this.rowCrossword);
   }
 }

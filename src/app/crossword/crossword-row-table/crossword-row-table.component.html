@@ -1,1 +1,14 @@
-<td *ngFor="let cell of rowCrossword">{{ cell }}</td>
+<td
+  *ngFor="let cell of rowCrossword; index as position"
+  class="cell"
+  [ngClass]="{
+    'cell-with-letter': cell.length !== 0,
+    'cell-without-letter': cell.length === 0,
+    'cell-with-password': crossword.positionPassword === position,
+    'cell-mode-hiden': crosswordItem.show === false
+  }"
+>
+  {{ cell }}
+</td>
+
+<!-- 'cell-with-letter': cell.length !== 0 -->

@@ -1,4 +1,4 @@
-<div *ngIf="crosswordItem.hidden; then thenBlock; else elseBlock"></div>
+<div *ngIf="crosswordItem.show; then thenBlock; else elseBlock"></div>
 <ng-template #thenBlock>
   <textarea [formControl]="textAreaControl"></textarea>
   <input type="text" [formControl]="orginAnswerControl" />

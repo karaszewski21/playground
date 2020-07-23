@@ -3,6 +3,7 @@
     <tr *ngFor="let crosswordItem of crosswordItems$ | async">
       <app-crossword-row-table
         [crosswordItem]="crosswordItem"
+        [crossword]="crossword"
       ></app-crossword-row-table>
     </tr>
   </tbody>

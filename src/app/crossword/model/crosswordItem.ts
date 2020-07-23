@@ -4,5 +4,5 @@ export interface CrosswordItem {
   anwser: string;
   searchLetter: string;
   positionPassword: number;
-  hidden: boolean;
+  show: boolean;
 }

@@ -11,6 +11,7 @@ import { getCrossword, getCrosswordItems } from '../store';
 export class CrosswordService {
   crossword: Crossword;
   crosswordItems: CrosswordItem[];
+
   constructor(private store: Store) {
     this.store
       .select(getCrossword)
@@ -23,7 +24,7 @@ export class CrosswordService {
       );
   }
 
-  public firstGenerateCrossword(password: string): any {
+  public generateFirstCrossword(password: string): any {
     let crosswordItems: CrosswordItem[] = [];
     let crossword: Crossword = {
       password: password,
@@ -39,7 +40,7 @@ export class CrosswordService {
         question: '',
         positionPassword: 0,
         searchLetter: value,
-        hidden: true,
+        show: true,
       };
 
       crosswordItems.push(crosswordItem);
@@ -48,7 +49,7 @@ export class CrosswordService {
     return { crossword, crosswordItems };
   }
 
-  public hiddenAnswer(enableMode: boolean): CrosswordItem[] {
+  public hiddenAnswerForCrossword(enableMode: boolean): CrosswordItem[] {
     let crosswordItem: CrosswordItem;
     let crosswordItems: CrosswordItem[] = [];
 
@@ -59,7 +60,7 @@ export class CrosswordService {
         question: element.question,
         searchLetter: element.searchLetter,
         positionPassword: element.positionPassword,
-        hidden: enableMode,
+        show: enableMode,
       };
       crosswordItems.push(crosswordItem);
     });
@@ -68,115 +69,101 @@ export class CrosswordService {
   }
 
   public generateRowFromCrosswordItem(crosswordItem: CrosswordItem): string[] {
+    if (crosswordItem.show) {
+      if (crosswordItem.anwser.length === 0) {
+        return this.generateRowForCrosswordWithoutAnswer(crosswordItem);
+      }
+      return this.generateRowForCrosswordWithAnswer(crosswordItem);
+    } else {
+      return this.generateRowForCrosswordWithoutAnswer(crosswordItem);
+    }
+  }
+
+  private generateRowForCrosswordWithoutAnswer(crosswordItem: CrosswordItem) {
     let row: string[] = [];
 
-    console.log(crosswordItem);
-    if (!crosswordItem.hidden) {
-      // if (crosswordItem.anwser.length === 0) {
-      //   let wLeft = crosswordItem.anwser.slice(
-      //     0,
-      //     crosswordItem.positionPassword
-      //   ).length;
-
-      //   let spaceForPassword = crosswordItem.positionPassword;
-      //   ++spaceForPassword;
-
-      //   let wRight = crosswordItem.anwser.slice(
-      //     spaceForPassword,
-      //     crosswordItem.anwser.length
-      //   ).length;
-
-      //   for (let index = 0; index < wLeft; index++) {
-      //     row.unshift('');
-      //   }
-      //   ``;
-
-      //   row = [...row, ...crosswordItem.searchLetter];
-
-      //   for (let index = 0; index < wRight; index++) {
-      //     row.push('');
-      //   }
-
-      //   return row;
-      // }
-      // let wLeft = crosswordItem.anwser.slice(0, this.crossword.positionPassword)
-      //   .length;
-
-      let spaceForPassword = this.crossword.positionPassword;
-      ++spaceForPassword;
-
-      // let wRight = crosswordItem.anwser.slice(
-      //   spaceForPassword,
-      //   crosswordItem.anwser.length
-      // ).length;
-
-      for (let index = 0; index < this.crossword.widthLeft; index++) {
-        row.unshift('');
-      }
-
-      row = [...row, ...crosswordItem.searchLetter];
-
-      for (let index = 0; index < this.crossword.widthRight; index++) {
-        row.push('');
-      }
-
-      return row;
-    } else {
-      if (crosswordItem.anwser.length === 0) {
-        let wLeft = crosswordItem.anwser.slice(
-          0,
-          crosswordItem.positionPassword
-        ).length;
-
-        let spaceForPassword = crosswordItem.positionPassword;
-        ++spaceForPassword;
-
-        let wRight = crosswordItem.anwser.slice(
-          spaceForPassword,
-          crosswordItem.anwser.length
-        ).length;
-
-        for (let index = 0; index < wLeft; index++) {
-          row.unshift('');
-        }
-        ``;
-
-        row = [...row, ...crosswordItem.searchLetter];
-
-        for (let index = 0; index < wRight; index++) {
-          row.push('');
-        }
-
-        return row;
-      } else {
-        let wLeft = crosswordItem.anwser.slice(
-          0,
-          crosswordItem.positionPassword
-        ).length;
-
-        let spaceForPassword = crosswordItem.positionPassword;
-        ++spaceForPassword;
-
-        let wRight = crosswordItem.anwser.slice(
-          spaceForPassword,
-          crosswordItem.anwser.length
-        ).length;
-
-        let stepLeft = this.crossword.widthLeft - wLeft;
-        let stepRight = this.crossword.widthRight - wRight;
-
-        for (let index = 0; index < stepLeft; index++) {
-          row.unshift('');
-        }
-
-        row = [...row, ...crosswordItem.anwser];
-
-        for (let index = 0; index < stepRight; index++) {
-          row.push('');
-        }
-        return row;
-      }
+    for (let index = 0; index < this.crossword.widthLeft; index++) {
+      row.unshift('');
     }
+
+    row = [...row, ...crosswordItem.searchLetter];
+
+    for (let index = 0; index < this.crossword.widthRight; index++) {
+      row.push('');
+    }
+
+    return row;
+  }
+
+  private generateRowForCrosswordWithAnswer(
+    crosswordItem: CrosswordItem
+  ): string[] {
+    let row: string[] = [];
+
+    let widthLeftCrosswordItem =
+      this.crossword.widthLeft - this.countLeftWidthAnswer(crosswordItem);
+    let widthRightCrosswordItem =
+      this.crossword.widthRight - this.countRightWidthAnswer(crosswordItem);
+
+    for (let index = 0; index < widthLeftCrosswordItem; index++) {
+      row.unshift('');
+    }
+
+    row = [...row, ...crosswordItem.anwser];
+
+    for (let index = 0; index < widthRightCrosswordItem; index++) {
+      row.push('');
+    }
+    return row;
+  }
+
+  private countLeftWidthAnswer(crosswordItem: CrosswordItem): number {
+    return crosswordItem.anwser.slice(0, crosswordItem.positionPassword).length;
+  }
+
+  private countRightWidthAnswer(crosswordItem: CrosswordItem): number {
+    let spaceOnPassword = crosswordItem.positionPassword;
+    ++spaceOnPassword;
+
+    return crosswordItem.anwser.slice(
+      spaceOnPassword,
+      crosswordItem.anwser.length
+    ).length;
+  }
+
+  private countLeftWidthCrossword(
+    crosswordItem: CrosswordItem,
+    crossword: Crossword
+  ): number {
+    let widthLeftCrosswordItem = crosswordItem.anwser.slice(
+      0,
+      crosswordItem.positionPassword
+    ).length;
+
+    if (widthLeftCrosswordItem > crossword.widthLeft) {
+      return widthLeftCrosswordItem;
+    }
+
+    return crossword.widthLeft;
+  }
+
+  private countRightWidthCrossword(
+    crosswordItem: CrosswordItem,
+    crossword: Crossword
+  ): number {
+    let spaceOnPassword = crosswordItem.positionPassword;
+    ++spaceOnPassword;
+
+    let widthRightCrosswordItem = crosswordItem.anwser.slice(
+      spaceOnPassword,
+      crosswordItem.anwser.length
+    ).length;
+
+    if (widthRightCrosswordItem > crossword.widthRight) {
+      return widthRightCrosswordItem;
+    }
+
+    return crossword.widthRight;
   }
 
   public updateCrossword(crosswordItem: CrosswordItem): Crossword {
@@ -187,27 +174,18 @@ export class CrosswordService {
       widthRight: this.crossword.widthRight,
     };
 
-    let wLeft = crosswordItem.anwser.slice(0, crosswordItem.positionPassword)
-      .length;
+    crossword.widthLeft = this.countLeftWidthCrossword(
+      crosswordItem,
+      crossword
+    );
 
-    let spaceForPassword = crosswordItem.positionPassword;
-    ++spaceForPassword;
-
-    let wRight = crosswordItem.anwser.slice(
-      spaceForPassword,
-      crosswordItem.anwser.length
-    ).length;
-
-    if (wLeft > crossword.widthLeft) {
-      crossword.widthLeft = wLeft;
-    }
+    crossword.widthRight = this.countRightWidthCrossword(
+      crosswordItem,
+      crossword
+    );
 
     if (crosswordItem.positionPassword > crossword.positionPassword) {
       crossword.positionPassword = crosswordItem.positionPassword;
-    }
-
-    if (wRight > crossword.widthRight) {
-      crossword.widthRight = wRight;
     }
 
     return crossword;
@@ -215,7 +193,7 @@ export class CrosswordService {
 
   public addCrossItemToList(
     position: number,
-    hidden: boolean,
+    show: boolean = true,
     crosswordItem: CrosswordItem
   ): CrosswordItem[] {
     let crosswordItems: CrosswordItem[] = [];
@@ -227,7 +205,7 @@ export class CrosswordService {
         question: element.question,
         searchLetter: element.searchLetter,
         positionPassword: element.positionPassword,
-        hidden: element.hidden,
+        show: element.show,
       };
       crosswordItems.push(crosswordItem);
     });
@@ -238,7 +216,7 @@ export class CrosswordService {
       question: crosswordItem.question,
       positionPassword: crosswordItem.positionPassword,
       searchLetter: crosswordItem.searchLetter,
-      hidden: hidden ?? crosswordItem.hidden,
+      show: show ?? crosswordItem.show,
     };
 
     crosswordItems[position] = addedcCrosswordItem;

@@ -32,34 +32,29 @@ export class CrosswordQuestionComponent implements OnInit {
   constructor(private store: Store) {}
 
   ngOnInit(): void {
+    this.initFormControls();
+  }
+
+  private initFormControls() {
     this.answer = [...this.crosswordItem.anwser];
     this.orginAnswerControl = new FormControl(this.crosswordItem.anwser);
     this.orginAnswerControl.valueChanges.subscribe((anser) => {
       this.answer = [...anser];
-      // this.crosswordItem.anwser = anser;
     });
-
     this.textAreaControl = new FormControl(this.crosswordItem.question);
-    this.textAreaControl.valueChanges.subscribe((question) => {
-      // this.crosswordItem.question = question;
-    });
-
     this.answerToAdded = new FormControl(this.answerToAdded);
-    this.answerToAdded.valueChanges.subscribe((question) => {
-      // this.crosswordItem.question = question;
-    });
   }
 
   checkLetter(event: any): void {
     let selectedLetter: string = event[0];
     this.selectedComponent = event[1];
 
-    this.allLetters.forEach((element) => {
-      element.resetColor();
-    });
+    // this.allLetters.forEach((element) => {
+    //   element.resetColor();
+    // });
 
     if (selectedLetter === this.crosswordItem.searchLetter) {
-      this.selectedComponent.selected = true;
+      // this.selectedComponent.setColor();
       this.addAnswerToCrossword();
     } else {
       alert(`Litera ${selectedLetter} jest nieodpowiednia`);
@@ -73,7 +68,7 @@ export class CrosswordQuestionComponent implements OnInit {
       positionCrossword: this.crosswordItem.positionCrossword,
       anwser: this.orginAnswerControl.value,
       question: this.textAreaControl.value,
-      hidden: this.crosswordItem.hidden,
+      show: this.crosswordItem.show,
       searchLetter: this.crosswordItem.searchLetter,
       positionPassword: this.selectedComponent.position,
     };
@@ -93,7 +88,7 @@ export class CrosswordQuestionComponent implements OnInit {
       positionCrossword: this.crosswordItem.positionCrossword,
       anwser: this.orginAnswerControl.value,
       question: this.textAreaControl.value,
-      hidden: true,
+      show: true,
       searchLetter: this.crosswordItem.searchLetter,
       positionPassword: this.crosswordItem.positionPassword,
     };

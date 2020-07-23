@@ -1,12 +1,9 @@
-<label><input type="checkbox" /></label>
-
 <div>
-  <label for="hiddenAnswer">Ukryj odpowiedzi</label>
+  <label for="hideAnswer">Ukryj odpowiedzi</label>
   <input
     type="checkbox"
-    name="hiddenAnswer"
-    id="hiddenAnswer"
-    [checked]="modeHidden"
+    name="hideAnswer"
+    [checked]="false"
     (change)="changeMode()"
   />
 </div>

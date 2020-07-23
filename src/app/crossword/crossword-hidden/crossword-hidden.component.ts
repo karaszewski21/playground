@@ -8,14 +8,14 @@ import { ModeHidden } from '../store';
   styleUrls: ['./crossword-hidden.component.scss'],
 })
 export class CrosswordHiddenComponent implements OnInit {
-  modeHidden: boolean = false;
+  hideAnswer: boolean = true;
+
   constructor(private store: Store) {}
 
   ngOnInit(): void {}
-  changeMode(): void {
-    this.modeHidden = !this.modeHidden;
 
-    let mode = this.modeHidden;
+  changeMode(): void {
+    let mode = (this.hideAnswer = !this.hideAnswer);
     this.store.dispatch(new ModeHidden({ mode }));
   }
 }

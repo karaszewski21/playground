@@ -23,7 +23,7 @@ export class CrosswordEffects {
     ofType<CreateCrossword>(CrosswordActionTypes.Create),
     map((action) => action.payload.password),
     tap((password) => console.log(password)),
-    map((password) => this.crosswordService.firstGenerateCrossword(password)),
+    map((password) => this.crosswordService.generateFirstCrossword(password)),
     tap((crossword) => console.log(crossword)),
     map(
       ({ crossword, crosswordItems }) =>
@@ -60,7 +60,7 @@ export class CrosswordEffects {
     ofType<ModeHidden>(CrosswordActionTypes.HiddenAnser),
     map((action) => action.payload.mode),
     tap((payload) => console.log(payload)),
-    map((mode) => this.crosswordService.hiddenAnswer(mode)),
+    map((mode) => this.crosswordService.hiddenAnswerForCrossword(mode)),
     tap((crosswordItems) => console.log(crosswordItems)),
     map((crosswordItems) => new ModeHiddenSuccess({ crosswordItems }))
   );

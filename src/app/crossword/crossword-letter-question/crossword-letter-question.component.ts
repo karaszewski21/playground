@@ -24,10 +24,16 @@ export class CrosswordLetterQuestionComponent implements OnInit {
 
   @HostListener('click', ['this'])
   selectedLetter(component: CrosswordLetterQuestionComponent): void {
+    this.setColor();
     this.checkLetter.emit([this.letter, component]);
   }
 
-  resetColor() {
+  setColor(): void {
+    console.log('sed color');
+    this.selected = true;
+  }
+
+  resetColor(): void {
     this.selected = false;
   }
 }
