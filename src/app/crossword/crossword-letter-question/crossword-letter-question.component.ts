@@ -16,7 +16,7 @@ import {
 export class CrosswordLetterQuestionComponent implements OnInit {
   @Input() position: number;
   @Input() letter: string;
-  @Output() checkLetter = new EventEmitter<any>();
+  @Output() selectedLetterEvent = new EventEmitter<any>();
   selected: boolean = false;
   constructor() {}
 
@@ -24,13 +24,13 @@ export class CrosswordLetterQuestionComponent implements OnInit {
 
   @HostListener('click', ['this'])
   selectedLetter(component: CrosswordLetterQuestionComponent): void {
-    this.setColor();
-    this.checkLetter.emit([this.letter, component]);
+    this.selectedLetterEvent.emit([this.letter, component]);
   }
 
   setColor(): void {
-    console.log('sed color');
-    this.selected = true;
+    console.log('befor', this);
+    //this.selected = true;
+    console.log('after', this);
   }
 
   resetColor(): void {

@@ -49,7 +49,11 @@ export class CrosswordEffects {
     map((action) => action.payload),
     tap((payload) => console.log(payload)),
     map(({ position, hidden, crosswordItem }) =>
-      this.crosswordService.addCrossItemToList(position, hidden, crosswordItem)
+      this.crosswordService.updateCrossItemsList(
+        position,
+        hidden,
+        crosswordItem
+      )
     ),
     tap((crosswordItems) => console.log(crosswordItems)),
     map((crosswordItems) => new AddCrosswordItemSuccess({ crosswordItems }))
@@ -60,7 +64,7 @@ export class CrosswordEffects {
     ofType<ModeHidden>(CrosswordActionTypes.HiddenAnser),
     map((action) => action.payload.mode),
     tap((payload) => console.log(payload)),
-    map((mode) => this.crosswordService.hiddenAnswerForCrossword(mode)),
+    map((mode) => this.crosswordService.hiddenAnswersForCrossword(mode)),
     tap((crosswordItems) => console.log(crosswordItems)),
     map((crosswordItems) => new ModeHiddenSuccess({ crosswordItems }))
   );

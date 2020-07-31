@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 
 import { CrosswordModule } from './crossword/crossword.module';
 import { RebusModule } from './rebus/rebus.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [AppComponent],
