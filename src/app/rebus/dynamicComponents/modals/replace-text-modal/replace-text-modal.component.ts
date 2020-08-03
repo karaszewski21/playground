@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalComponent } from '../modal/modal-omponent';
+import { ModalComponent } from '../modal/modal-component';
 import { Store } from '@ngrx/store';
 
 @Component({

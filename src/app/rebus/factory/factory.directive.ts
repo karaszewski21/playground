@@ -1,8 +1,8 @@
-import { Directive } from '@angular/core';
+import { Directive, ViewContainerRef } from '@angular/core';
 
 @Directive({
-  selector: '[factory]',
+  selector: '[appFactory]',
 })
 export class FactoryDirective {
-  constructor() {}
+  constructor(public viewContainerRef: ViewContainerRef) {}
 }

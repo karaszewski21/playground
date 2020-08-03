@@ -3,13 +3,12 @@ import { IRebusItemComponent } from '../rebusItem/rebusitem-component';
 import { IRebusItem } from '../../../model/interface/IRebusItem';
 
 @Component({
-  selector: 'app-image',
-  templateUrl: './image.component.html',
-  styleUrls: ['./image.component.scss'],
+  selector: 'app-plus',
+  templateUrl: './plus.component.html',
+  styleUrls: ['./plus.component.scss'],
 })
-export class ImageComponent implements IRebusItemComponent, OnInit {
+export class PlusComponent implements IRebusItemComponent, OnInit {
   @Input() rebusItem: IRebusItem;
-
   constructor() {}
 
   ngOnInit(): void {}

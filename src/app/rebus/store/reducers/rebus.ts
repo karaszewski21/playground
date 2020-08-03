@@ -7,7 +7,7 @@ import { RebusActionTypes, RebusAction } from '../actions/rebus';
 export interface State {
   rebus?: Rebus;
   rebusItems: IRebusItem[];
-  accessRebusItem: IAccessRebusItem[];
+  accessRebusItem?: IAccessRebusItem[];
 }
 
 const initialState: State = {
@@ -39,10 +39,7 @@ export function reducer(state = initialState, action: RebusAction) {
 
 export const getState = createFeatureSelector<State>('rebus');
 
-export const getRebus = createSelector(
-  getState,
-  (state) => state.rebus
-);
+export const getRebus = createSelector(getState, (state) => state.rebus);
 
 export const getRebusItems = createSelector(
   getState,
@@ -51,6 +48,5 @@ export const getRebusItems = createSelector(
 
 export const getAccessRebusItems = createSelector(
   getState,
-  (state) => state.accessRebusItem;
+  (state) => state.accessRebusItem
 );
-

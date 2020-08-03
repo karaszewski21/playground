@@ -6,8 +6,10 @@ import { IAccessRebusItem } from '../model/interface/IAccessRebusItem';
 })
 export class PermissionService {
   accessRebusItems: IAccessRebusItem[] = [
-    { name: 'Tekst', nameComponent: 'TextComponent' },
-    { name: 'Zakresl tekst', nameComponent: 'XTextComponent' },
+    { name: 'Tekst', nameComponent: 'TextModalComponent' },
+    { name: 'Zakresl tekst', nameComponent: 'XTextModalComponent' },
+    { name: 'Dodaj obrazek', nameComponent: 'ImageModalComponent' },
+    { name: 'Zamien tekst', nameComponent: 'ReplaceTextModalComponent' },
   ];
   constructor() {}
 

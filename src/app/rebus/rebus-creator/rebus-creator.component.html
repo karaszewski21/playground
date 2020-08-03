@@ -1,1 +1,7 @@
-<p>rebus-creator works!</p>
+<div *ngFor="let accessRebustItem of accessRebustItems$ | async">
+  <button (click)="openModal(accessRebustItem.nameComponent)">
+    {{ accessRebustItem.name }}
+  </button>
+</div>
+
+<app-factory [nameComponent]="nameModalComponent"></app-factory>
