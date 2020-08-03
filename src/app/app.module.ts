@@ -7,6 +7,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { CrosswordModule } from './crossword/crossword.module';
+import { RebusModule } from './rebus/rebus.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -14,6 +16,7 @@ import { CrosswordModule } from './crossword/crossword.module';
     BrowserModule,
     AppRoutingModule,
     CrosswordModule,
+    RebusModule,
     ReactiveFormsModule,
     StoreDevtoolsModule.instrument({
       name: 'Crossword DevTools',

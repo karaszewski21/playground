@@ -3,78 +3,105 @@ import {
   OnInit,
   ViewChildren,
   QueryList,
-  ElementRef,
   Input,
-  HostListener,
+  AfterViewInit,
 } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { CrosswordItem } from '../model/crosswordItem';
-import { CrosswordLetterQuestionComponent } from '../crossword-letter-question/crossword-letter-question.component';
+import { CrosswordItem, AnswerCrossword } from '../model/crosswordItem';
 import { AddCrosswordItem, UpdateCrossword } from '../store';
+import { PluginComponent } from '../../shared/plugin/plugin.component';
+import { SelectorCellComponent } from '../../shared/components/selector-cell/selector-cell.component';
+import { CrosswordService } from '../service/crossword.service';
 
 @Component({
   selector: 'app-crossword-question',
   templateUrl: './crossword-question.component.html',
   styleUrls: ['./crossword-question.component.scss'],
 })
-export class CrosswordQuestionComponent implements OnInit {
+export class CrosswordQuestionComponent implements OnInit, AfterViewInit {
+  answersCrossword: AnswerCrossword[];
   answer: string[];
-  selectedComponent: CrosswordLetterQuestionComponent;
+  selectedSelectorCellComponent: SelectorCellComponent;
   orginAnswerControl: FormControl;
-  textAreaControl: FormControl;
-  answerToAdded: FormControl;
+  questionControl: FormControl;
+  checkedAnswerControl: FormControl;
 
   @Input() crosswordItem: CrosswordItem;
-  @ViewChildren(CrosswordLetterQuestionComponent)
-  allLetters: QueryList<CrosswordLetterQuestionComponent>;
+  @ViewChildren(PluginComponent) pluginComponents!: QueryList<PluginComponent>;
 
-  constructor(private store: Store) {}
+  constructor(
+    private store: Store,
+    private crosswordService: CrosswordService
+  ) {}
 
   ngOnInit(): void {
+    this.initAnswersCrossword();
     this.initFormControls();
   }
 
-  private initFormControls() {
-    this.answer = [...this.crosswordItem.anwser];
-    this.orginAnswerControl = new FormControl(this.crosswordItem.anwser);
-    this.orginAnswerControl.valueChanges.subscribe((anser) => {
-      this.answer = [...anser];
-    });
-    this.textAreaControl = new FormControl(this.crosswordItem.question);
-    this.answerToAdded = new FormControl(this.answerToAdded);
+  ngAfterViewInit(): void {
+    this.initColorSetCell();
   }
 
-  checkLetter(event: any): void {
-    let selectedLetter: string = event[0];
-    this.selectedComponent = event[1];
+  private initColorSetCell(): void {
+    this.pluginComponents
+      .toArray()
+      [
+        this.crosswordItem.answerCrossword.positionSelectedLetter
+      ]?.componentRef.instance.setColor('red');
+  }
 
-    // this.allLetters.forEach((element) => {
-    //   element.resetColor();
-    // });
+  private initAnswersCrossword() {
+    let { answerCrossword } = this.crosswordItem;
 
-    if (selectedLetter === this.crosswordItem.searchLetter) {
-      // this.selectedComponent.setColor();
+    this.answersCrossword = this.crosswordService.getAnswerCrosswordList(
+      answerCrossword.answer
+    );
+  }
+
+  private initFormControls() {
+    let { answerCrossword, question } = this.crosswordItem;
+
+    this.orginAnswerControl = new FormControl(
+      answerCrossword.answer,
+      Validators.required
+    );
+    this.orginAnswerControl.valueChanges.subscribe((answer) => {
+      this.answersCrossword = this.crosswordService.getAnswerCrosswordList(
+        answer
+      );
+    });
+    this.questionControl = new FormControl(question, Validators.required);
+    this.checkedAnswerControl = new FormControl('', Validators.required);
+  }
+
+  selectLetter(event: any) {
+    let { data } = (this.selectedSelectorCellComponent = <
+      SelectorCellComponent
+    >event);
+
+    this.pluginComponents.forEach((element) => {
+      (<SelectorCellComponent>element.componentRef.instance).resetColor();
+    });
+
+    if (!this.questionControl.valid) {
+      alert(`Nie zadano pytania`);
+      return;
+    }
+
+    if (data.answer === this.crosswordItem.searchLetter) {
+      this.selectedSelectorCellComponent.setColor('red');
       this.addAnswerToCrossword();
     } else {
-      alert(`Litera ${selectedLetter} jest nieodpowiednia`);
+      alert(`Litera ${data.answer} jest nieodpowiednia`);
     }
   }
-
   addAnswerToCrossword() {
-    let crosswordItem: CrosswordItem;
+    let crosswordItem: CrosswordItem = this.getCompleteCrosswordItem();
+    let { positionCrossword: position }: CrosswordItem = crosswordItem;
+    let hidden = true;
 
-    crosswordItem = {
-      positionCrossword: this.crosswordItem.positionCrossword,
-      anwser: this.orginAnswerControl.value,
-      question: this.textAreaControl.value,
-      show: this.crosswordItem.show,
-      searchLetter: this.crosswordItem.searchLetter,
-      positionPassword: this.selectedComponent.position,
-    };
-
-    let position = this.crosswordItem.positionCrossword;
-    let hidden = null;
     this.store.dispatch(new UpdateCrossword({ crosswordItem }));
     this.store.dispatch(
       new AddCrosswordItem({ position, hidden, crosswordItem })
@@ -82,26 +109,43 @@ export class CrosswordQuestionComponent implements OnInit {
   }
 
   checkAnsweForCrossword() {
-    let crosswordItem: CrosswordItem;
+    if (!this.checkedAnswerControl.valid) {
+      alert(`Odpowiedz jest wymagana`);
+      return 0;
+    }
 
-    crosswordItem = {
-      positionCrossword: this.crosswordItem.positionCrossword,
-      anwser: this.orginAnswerControl.value,
-      question: this.textAreaControl.value,
+    let crosswordItem: CrosswordItem = {
+      ...this.getCompleteCrosswordItem(),
       show: true,
-      searchLetter: this.crosswordItem.searchLetter,
-      positionPassword: this.crosswordItem.positionPassword,
+      answerCrossword: {
+        answer: this.orginAnswerControl.value,
+        positionSelectedLetter: this.crosswordItem.answerCrossword
+          .positionSelectedLetter,
+      },
     };
-
-    let position = this.crosswordItem.positionCrossword;
+    let { positionCrossword: position, answerCrossword } = crosswordItem;
     let hidden = true;
 
-    if (crosswordItem.anwser === this.answerToAdded.value) {
+    if (answerCrossword.answer === this.checkedAnswerControl.value) {
       this.store.dispatch(
         new AddCrosswordItem({ position, hidden, crosswordItem })
       );
     } else {
-      alert(`${this.answerToAdded.value} jest nie poprawne`);
+      alert(`${this.checkedAnswerControl.value} jest nie poprawne`);
     }
+  }
+
+  getCompleteCrosswordItem(): CrosswordItem {
+    let crosswordItem: CrosswordItem = {
+      ...this.crosswordService.getCrosswrodItem(this.crosswordItem),
+      answerCrossword: {
+        answer: this.orginAnswerControl.value,
+        positionSelectedLetter: this.selectedSelectorCellComponent?.data
+          .positionSelectedLetter,
+      },
+      question: this.questionControl.value,
+    };
+
+    return crosswordItem;
   }
 }

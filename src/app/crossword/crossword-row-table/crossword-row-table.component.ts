@@ -5,7 +5,7 @@ import {
   OnChanges,
   SimpleChanges,
 } from '@angular/core';
-import { CrosswordService } from '../service/crossword.service';
+import { CrosswordService, Row } from '../service/crossword.service';
 import { CrosswordItem } from '../model/crosswordItem';
 import { Crossword } from '../model/crossword';
 
@@ -15,11 +15,16 @@ import { Crossword } from '../model/crossword';
   styleUrls: ['./crossword-row-table.component.scss'],
 })
 export class CrosswordRowTableComponent implements OnInit, OnChanges {
-  constructor(private crosswordService: CrosswordService) {}
-  rowCrossword: string[];
+  rowCrossword: Row[];
+  cellWithLetter: boolean = false;
+  cellWithPassword: boolean = false;
+  cellModdHide: boolean = false;
+  cellWithoutLetter: boolean = true;
 
   @Input() crosswordItem: CrosswordItem;
   @Input() crossword: Crossword;
+
+  constructor(private crosswordService: CrosswordService) {}
 
   ngOnInit(): void {}
 
@@ -28,4 +33,6 @@ export class CrosswordRowTableComponent implements OnInit, OnChanges {
       changes.crosswordItem.currentValue
     );
   }
+
+  setColorForCell() {}
 }

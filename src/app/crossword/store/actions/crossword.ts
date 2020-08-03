@@ -9,8 +9,8 @@ export enum CrosswordActionTypes {
   UpdateSuccess = 'update crossword is successfully [Crossword]',
   AddCrosswordItem = 'add crosswordItem to crossword [Crossword]',
   AddCrosswordItemSuccess = 'crosswordItem added to crossword successfully [Crossword]',
-  HiddenAnser = 'hidding answer in crossword [Crossword]',
-  HiddenAnserSuccess = 'hiddrn answer in crossword [Crossword]',
+  HiddenAnser = 'hidding answers in crossword [Crossword]',
+  HiddenAnserSuccess = 'hidden answers in crossword [Crossword]',
 }
 
 export class CreateCrossword implements Action {
