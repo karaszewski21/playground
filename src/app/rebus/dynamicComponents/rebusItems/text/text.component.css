@@ -1,0 +1,9 @@
+.text-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+p {
+  font-size: 50px;
+}
