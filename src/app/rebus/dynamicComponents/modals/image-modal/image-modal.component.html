@@ -1,2 +1,16 @@
-<p>image-modal works!</p>
-<button (click)="sendModelToStore()">dodaj</button>
+<input type="file" (change)="fileChangeEvent($event)" />
+
+<image-cropper
+  [imageChangedEvent]="imageChangedEvent"
+  [maintainAspectRatio]="true"
+  [aspectRatio]="4 / 3"
+  format="png"
+  (imageCropped)="imageCropped($event)"
+  (imageLoaded)="imageLoaded()"
+  (cropperReady)="cropperReady()"
+  (loadImageFailed)="loadImageFailed()"
+></image-cropper>
+
+<p>Podglad obrazka</p>
+<img [width]="width" [height]="height" [src]="croppedImage" />
+<button (click)="addImageAndcloseModal()">Dodaj obrazek</button>

@@ -1,6 +1,7 @@
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { RebusVerifyComponent } from './rebus-verify/rebus-verify.component';
 import { RebusRoutingModule } from './rebus-routing.module';
 import { RebusComponent } from './rebus/rebus.component';
 import { RebusNavComponent } from './rebus-nav/rebus-nav.component';
@@ -22,9 +23,14 @@ import { StoreModule } from '@ngrx/store';
 import { reducer } from './store/reducers/rebus';
 import { EffectsModule } from '@ngrx/effects';
 import { RebusEffects } from './store/effects/rebus';
+import { RebusItemsComponent } from './rebus-items/rebus-items.component';
+import { SharedModule } from '../shared/shared.module';
+import { RebusToggleModeComponent } from './rebus-toggle-mode/rebus-toggle-mode.component';
 
 @NgModule({
   declarations: [
+    RebusVerifyComponent,
+    RebusItemsComponent,
     RebusComponent,
     RebusNavComponent,
     RebusPasswordComponent,
@@ -41,9 +47,11 @@ import { RebusEffects } from './store/effects/rebus';
     ReplaceTextModalComponent,
     ImageModalComponent,
     FactoryDirective,
+    RebusToggleModeComponent,
   ],
   imports: [
     CommonModule,
+    SharedModule,
     RebusRoutingModule,
     StoreModule.forRoot({ rebus: reducer }),
     EffectsModule.forRoot([RebusEffects]),
@@ -59,5 +67,6 @@ import { RebusEffects } from './store/effects/rebus';
     ReplaceTextModalComponent,
     ImageModalComponent,
   ],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class RebusModule {}

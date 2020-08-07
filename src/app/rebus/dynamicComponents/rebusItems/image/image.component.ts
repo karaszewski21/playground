@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { IRebusItemComponent } from '../rebusItem/rebusitem-component';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { IRebusItemComponent } from '../../interface/rebusitem-component';
 import { IRebusItem } from '../../../model/interface/IRebusItem';
+import { ImageRebusItem } from '../../../model/ImageRebusItem';
 
 @Component({
   selector: 'app-image',
@@ -8,7 +9,8 @@ import { IRebusItem } from '../../../model/interface/IRebusItem';
   styleUrls: ['./image.component.scss'],
 })
 export class ImageComponent implements IRebusItemComponent, OnInit {
-  @Input() rebusItem: IRebusItem;
+  @Input() rebusItem: ImageRebusItem;
+  @Output() rebusEvent: EventEmitter<any> = new EventEmitter();
 
   constructor() {}
 

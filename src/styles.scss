@@ -2,3 +2,23 @@
 body {
   margin: 0;
 }
+
+.rebusItem-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.rebus-content {
+  margin: 10px 10px 10px;
+}

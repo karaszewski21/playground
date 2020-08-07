@@ -1,7 +1,19 @@
-<div *ngFor="let accessRebustItem of accessRebustItems$ | async">
-  <button (click)="openModal(accessRebustItem.nameComponent)">
-    {{ accessRebustItem.name }}
-  </button>
-</div>
+<div class="creator-container">
+  <div *ngFor="let accessRebustItem of accessRebustItems$ | async">
+    <button (click)="openModal(accessRebustItem.nameComponent)">
+      {{ accessRebustItem.name }}
+    </button>
+  </div>
+  <button (click)="appPlus()">+</button>
 
-<app-factory [nameComponent]="nameModalComponent"></app-factory>
+  <div
+    class="modal modal-visible"
+    [style.visibility]="isDivVisible ? 'visible' : 'hidden'"
+  >
+    <button (click)="resetNameModal()">X</button>
+    <app-factory
+      [nameComponent]="nameModalComponent"
+      (resetNameModalEvent)="resetNameModal()"
+    ></app-factory>
+  </div>
+</div>

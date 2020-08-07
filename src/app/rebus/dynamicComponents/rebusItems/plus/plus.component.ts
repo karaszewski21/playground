@@ -1,6 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { IRebusItemComponent } from '../rebusItem/rebusitem-component';
-import { IRebusItem } from '../../../model/interface/IRebusItem';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { IRebusItemComponent } from '../../interface/rebusitem-component';
+import { PlusRebusItem } from '../../../model/PlusRebusItem';
 
 @Component({
   selector: 'app-plus',
@@ -8,7 +8,9 @@ import { IRebusItem } from '../../../model/interface/IRebusItem';
   styleUrls: ['./plus.component.scss'],
 })
 export class PlusComponent implements IRebusItemComponent, OnInit {
-  @Input() rebusItem: IRebusItem;
+  @Input() rebusItem: PlusRebusItem;
+  @Output() rebusEvent: EventEmitter<any> = new EventEmitter();
+
   constructor() {}
 
   ngOnInit(): void {}

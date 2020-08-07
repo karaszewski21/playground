@@ -1,1 +1,12 @@
-<p>replace-text-modal works!</p>
+<div class="modal-content">
+  <input type="text" [formControl]="textLeftControl" />
+  <input type="text" [formControl]="textRightControl" />
+
+  <h2>{{ textLeftControl.value }}</h2>
+  <h2>=</h2>
+  <h2>{{ textRightControl.value }}</h2>
+
+  <button (click)="addReplaceTextRebusItemAndCloseModal()">
+    Dodaj zmieniony tekst
+  </button>
+</div>

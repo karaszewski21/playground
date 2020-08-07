@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { IRebusItem } from '../../../model/interface/IRebusItem';
-import { IRebusItemComponent } from '../rebusItem/rebusitem-component';
+import { IRebusItemComponent } from '../../interface/rebusitem-component';
+import { ReplaceTextRebusItem } from '../../../model/ReplaceTextRebusItem';
 
 @Component({
   selector: 'app-replace-text',
@@ -8,7 +9,8 @@ import { IRebusItemComponent } from '../rebusItem/rebusitem-component';
   styleUrls: ['./replace-text.component.scss'],
 })
 export class ReplaceTextComponent implements IRebusItemComponent, OnInit {
-  @Input() rebusItem: IRebusItem;
+  @Input() rebusItem: ReplaceTextRebusItem;
+  @Output() rebusEvent: EventEmitter<any> = new EventEmitter();
 
   constructor() {}
 

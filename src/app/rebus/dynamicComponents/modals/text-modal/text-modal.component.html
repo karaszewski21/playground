@@ -1,1 +1,5 @@
-<p>text-modal works!</p>
+<div class="modal-content">
+  <p>Dodaj tekst</p>
+  <input type="text" [formControl]="textControl" />
+  <button (click)="addTextRebusItemAndCloseModal()">Dodaj tekst</button>
+</div>

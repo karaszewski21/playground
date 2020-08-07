@@ -6,19 +6,23 @@ import {
   Input,
   OnChanges,
   SimpleChanges,
+  EventEmitter,
+  Output,
 } from '@angular/core';
 import { FactoryDirective } from './factory.directive';
 import { FactoryResolverService } from '../service/factory-resolver.service';
 import { IRebusItem } from '../model/interface/IRebusItem';
-import { IRebusItemComponent } from '../dynamicComponents/rebusItems/rebusItem/rebusitem-component';
+import { IRebusItemComponent } from '../dynamicComponents/interface/rebusitem-component';
 
 @Component({
   selector: 'app-factory',
-  template: '<ng-template appFactory></ng-template>',
+  template: '<ng-template class="factory" appFactory></ng-template>',
+  styleUrls: ['./factory.component.scss'],
 })
 export class FactoryComponent implements OnInit, OnChanges {
   @Input() rebusItem: IRebusItem;
   @Input() nameComponent: string = '';
+  @Output() resetNameModalEvent: EventEmitter<string> = new EventEmitter();
   @ViewChild(FactoryDirective, { static: true })
   factoryDirective: FactoryDirective;
 
@@ -28,14 +32,14 @@ export class FactoryComponent implements OnInit, OnChanges {
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.loadComponent();
+    if (this.nameComponent !== '' && this.nameComponent !== undefined) {
+      this.loadComponent();
+    }
   }
 
-  ngOnInit(): void {
-    //this.loadComponent();
-  }
+  ngOnInit(): void {}
 
-  loadComponent() {
+  loadComponent(): void {
     let componentItem = this.factoryResolverService.getComponentByName(
       this.nameComponent
     );
@@ -50,6 +54,9 @@ export class FactoryComponent implements OnInit, OnChanges {
     const componentRef = viewContainerRef.createComponent(componentFactory);
 
     (<IRebusItemComponent>componentRef.instance).rebusItem = this.rebusItem;
+    (<IRebusItemComponent>componentRef.instance).rebusEvent.subscribe(() => {
+      componentRef.destroy(), this.resetNameModalEvent.emit();
+    });
 
     componentRef.changeDetectorRef.detectChanges();
   }

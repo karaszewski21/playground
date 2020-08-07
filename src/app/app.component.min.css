@@ -1,1 +1,1 @@
-.container{display:flex;flex-direction:column;border:solid 1px red}.nav{display:flex;align-items:center;border:solid 1px red}.footer{border:solid 1px red}
+.container{display:flex;flex-direction:column}.nav{display:flex;flex-direction:row;justify-content:center}.footer{display:flex;flex-direction:row;justify-content:center}a{padding:5px 5px;text-decoration:none}

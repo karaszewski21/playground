@@ -1,1 +1,8 @@
-<p>xtext-modal works!</p>
+<div class="modal-content">
+  <p>Dodaj tekst do skreslenia</p>
+  <input type="text" [formControl]="textControl" />
+  <button (click)="addXTextRebusItemAndCloseModal()">
+    Dodaj skreslony tekst
+  </button>
+  <strike>{{ strikeText }}</strike>
+</div>
