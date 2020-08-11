@@ -7,6 +7,7 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
+  width: 100%;
 }
 
 .footer {
@@ -16,6 +17,31 @@
 }
 
 a {
+  text-transform: uppercase;
   padding: 5px 5px;
   text-decoration: none;
+  text-align: center;
+  border-radius: 0.75em;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-in-out;
+  transition-property: background, color, padding, border-radius;
+  box-shadow: 0.1em -0.1em 0 0.1em rgba(0, 0, 0, 0.2), inset 0 0 0 0.15em rgba(0, 0, 0, 0.4), -0.1em 0.1em 0 0.1em rgba(0, 0, 0, 0.2);
+}
+
+a:after {
+  position: absolute;
+  z-index: -1;
+  content: "";
+  right: 0;
+  border-radius: 50%;
+  box-shadow: 1em 1em 0 2em rgba(255, 255, 255, 0.5);
+}
+
+a:last-child:after {
+  box-shadow: none;
+}
+
+a:hover {
+  background-color: rgba(251, 93, 0, 0.8);
+  padding-left: 3em;
 }

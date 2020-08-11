@@ -7,4 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   SelectorCellComponent = 'SelectorCellComponent';
+  printPage(): void {
+    window.print();
+  }
 }

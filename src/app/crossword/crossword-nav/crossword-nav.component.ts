@@ -9,8 +9,4 @@ export class CrosswordNavComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
-
-  print() {
-    window.print();
-  }
 }

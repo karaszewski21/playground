@@ -1,17 +1,32 @@
 <div *ngIf="crosswordItem.show; then thenBlock; else elseBlock"></div>
 <ng-template #thenBlock>
-  <textarea [formControl]="questionControl"></textarea>
-  <input type="text" [formControl]="orginAnswerControl" />
-  <div *ngFor="let answerCrossword of answersCrossword">
-    <app-plugin
-      [nameComponent]="SelectorCellComponent"
-      [data]="answerCrossword"
-      (event)="selectLetter($event)"
-    ></app-plugin>
+  <div class="question-content">
+    <textarea
+      placeholder="Pamietaj, dodaj pytanie!"
+      cols="30"
+      rows="5"
+      [formControl]="questionControl"
+    ></textarea>
+    <input
+      placeholder="podaj odpowiedz"
+      type="text"
+      [formControl]="orginAnswerControl"
+    />
+    <div class="letter-content">
+      <div *ngFor="let answerCrossword of answersCrossword">
+        <app-plugin
+          [nameComponent]="SelectorCellComponent"
+          [data]="answerCrossword"
+          (event)="selectLetter($event)"
+        ></app-plugin>
+      </div>
+    </div>
   </div>
 </ng-template>
 <ng-template #elseBlock>
-  <textarea [formControl]="questionControl"></textarea>
+  <div class="question-content">
+  <textarea cols="30" rows="5" [formControl]="questionControl"></textarea>
   <input type="text" [formControl]="checkedAnswerControl" />
   <button (click)="checkAnsweForCrossword()">Sprawdz</button>
+</div>
 </ng-template>

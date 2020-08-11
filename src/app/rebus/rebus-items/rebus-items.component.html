@@ -1,7 +1,5 @@
-<div class="items-container">
-  <app-factory
-    *ngFor="let rebusItem of getRebusItems$ | async"
-    [nameComponent]="rebusItem.nameComponent"
-    [rebusItem]="rebusItem"
-  ></app-factory>
-</div>
+<app-factory
+  *ngFor="let rebusItem of getRebusItems$ | async"
+  [nameComponent]="rebusItem.nameComponent"
+  [rebusItem]="rebusItem"
+></app-factory>

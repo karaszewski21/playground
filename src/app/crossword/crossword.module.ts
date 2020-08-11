@@ -36,8 +36,8 @@ import { SharedModule } from '../shared/shared.module';
     CrosswordRoutingModule,
     ReactiveFormsModule,
     SharedModule,
-    StoreModule.forRoot({ crossword: reducer }),
-    EffectsModule.forRoot([CrosswordEffects]),
+    StoreModule.forFeature('crossword', reducer),
+    EffectsModule.forFeature([CrosswordEffects]),
   ],
 })
 export class CrosswordModule {}

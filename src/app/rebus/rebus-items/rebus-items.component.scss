@@ -1,3 +1,5 @@
-.items-container {
+:host {
   display: flex;
+  flex-direction: row;
+  justify-content: center;
 }

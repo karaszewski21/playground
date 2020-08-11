@@ -1,9 +1,14 @@
-<div>
-  <label for="hideAnswer">Ukryj odpowiedzi</label>
-  <input
-    type="checkbox"
-    name="hideAnswer"
-    [checked]="false"
-    (change)="changeMode()"
-  />
-</div>
+<fieldset>
+  <legend>Ukryj odpowiedzi</legend>
+  <div>
+    <input
+      id="mode"
+      type="checkbox"
+      name="hideAnswer"
+      [checked]="false"
+      (change)="changeMode()"
+      placeholder="Ukryj odpowiedzi"
+    />
+    <label for="mode">Ukryj</label>
+  </div>
+</fieldset>

@@ -1,7 +1,7 @@
-<ul>
+<ol class="question-list">
   <li *ngFor="let crosswordItem of crosswordItems$ | async">
     <app-crossword-question
       [crosswordItem]="crosswordItem"
     ></app-crossword-question>
   </li>
-</ul>
+</ol>

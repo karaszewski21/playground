@@ -9,6 +9,8 @@ import { AppComponent } from './app.component';
 import { CrosswordModule } from './crossword/crossword.module';
 import { RebusModule } from './rebus/rebus.module';
 import { SharedModule } from './shared/shared.module';
+import { StoreModule, Store } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,6 +20,8 @@ import { SharedModule } from './shared/shared.module';
     CrosswordModule,
     RebusModule,
     ReactiveFormsModule,
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({
       name: 'Crossword DevTools',
     }),

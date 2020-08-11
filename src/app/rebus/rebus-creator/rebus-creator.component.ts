@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild, HostBinding } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  HostBinding,
+  ViewEncapsulation,
+} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AccessRebusItem } from '../model/AccessRebusItem';
@@ -16,7 +22,7 @@ import { PlusRebusItem } from '../model/PlusRebusItem';
   styleUrls: ['./rebus-creator.component.scss'],
 })
 export class RebusCreatorComponent implements OnInit {
-  isDivVisible = false;
+  isModalVisible = false;
   nameModalComponent: string;
   accessRebustItems$: Observable<AccessRebusItem[]>;
 
@@ -28,13 +34,13 @@ export class RebusCreatorComponent implements OnInit {
   }
 
   openModal(nameModalComponent: string): void {
-    this.isDivVisible = true;
+    this.isModalVisible = true;
     this.nameModalComponent = nameModalComponent;
   }
 
   resetNameModal(): void {
     this.nameModalComponent = '';
-    this.isDivVisible = false;
+    this.isModalVisible = false;
   }
 
   appPlus(): void {
@@ -46,5 +52,11 @@ export class RebusCreatorComponent implements OnInit {
       size: null,
     };
     this.store.dispatch(new AddRebusItem({ rebusItem }));
+  }
+
+  calculateClasses() {
+    // return {
+    //   'main-content': 'background-color: rgba(0, 0, 0, 0.4)',
+    // };
   }
 }

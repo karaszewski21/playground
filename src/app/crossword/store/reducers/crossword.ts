@@ -53,9 +53,9 @@ export const getState = createFeatureSelector<State>('crossword');
 
 export const getCrossword = createSelector(
   getState,
-  (state) => state.crossword
+  (state) => state?.crossword
 );
 export const getCrosswordItems = createSelector(
   getState,
-  (state) => state.crosswordItems
+  (state) => state?.crosswordItems
 );

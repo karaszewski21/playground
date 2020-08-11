@@ -1,1 +1,1 @@
-.items-container{display:flex}
+:host{display:flex;flex-direction:row;justify-content:center}

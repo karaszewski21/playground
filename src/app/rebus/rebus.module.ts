@@ -53,8 +53,8 @@ import { RebusToggleModeComponent } from './rebus-toggle-mode/rebus-toggle-mode.
     CommonModule,
     SharedModule,
     RebusRoutingModule,
-    StoreModule.forRoot({ rebus: reducer }),
-    EffectsModule.forRoot([RebusEffects]),
+    StoreModule.forFeature('rebus', reducer),
+    EffectsModule.forFeature([RebusEffects]),
   ],
   entryComponents: [
     PlusComponent,

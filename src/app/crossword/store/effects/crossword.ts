@@ -20,6 +20,7 @@ import { CrosswordService } from '../../service/crossword.service';
 export class CrosswordEffects {
   @Effect()
   createCrosswordByPassword$: Observable<Action> = this.actions$.pipe(
+    tap((password) => console.log(password)),
     ofType<CreateCrossword>(CrosswordActionTypes.Create),
     map((action) => action.payload.password),
     tap((password) => console.log(password)),
