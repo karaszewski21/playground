@@ -29,11 +29,11 @@ export class ReplaceTextModalComponent extends ModalComponent
   }
 
   ngOnInit(): void {
-    this.textLeftControl.valueChanges.subscribe((leftText) => {
-      this.replaceTextRebusItem.leftText = leftText;
+    this.textLeftControl.valueChanges.subscribe((leftText: string) => {
+      this.replaceTextRebusItem.leftText = leftText.toUpperCase();
     });
-    this.textRightControl.valueChanges.subscribe((rightText) => {
-      this.replaceTextRebusItem.rightText = rightText;
+    this.textRightControl.valueChanges.subscribe((rightText: string) => {
+      this.replaceTextRebusItem.rightText = rightText.toUpperCase();
     });
   }
 

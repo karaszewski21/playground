@@ -26,9 +26,8 @@ export class TextModalComponent extends ModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.textControl.valueChanges.subscribe((text) => {
-      this.text = text;
-      this.text.toUpperCase();
+    this.textControl.valueChanges.subscribe((text: string) => {
+      this.text = text.toUpperCase();
     });
   }
 

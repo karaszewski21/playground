@@ -1,5 +1,6 @@
 <div class="modal-content">
-  <p>Dodaj tekst</p>
-  <input type="text" [formControl]="textControl" />
-  <button (click)="addTextRebusItemAndCloseModal()">Dodaj tekst</button>
+  <input placeholder="podaj tekst" type="text" [formControl]="textControl" />
+  <button class="button-modal" (click)="addTextRebusItemAndCloseModal()">
+    Dodaj tekst
+  </button>
 </div>

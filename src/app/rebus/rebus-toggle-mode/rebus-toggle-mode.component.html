@@ -1,6 +1,8 @@
-<button
-  (click)="toggleModeRebus()"
-  [style.visibility]="isButtonVisible ? 'visible' : 'hidden'"
->
-  Zmien tryb
-</button>
+<div class="toggle-mode-content">
+  <button
+    (click)="toggleModeRebus()"
+    [style.visibility]="isButtonVisible ? 'visible' : 'hidden'"
+  >
+    {{ textButton }}
+  </button>
+</div>

@@ -4,38 +4,52 @@ import {
   ViewChild,
   HostBinding,
   ViewEncapsulation,
+  OnDestroy,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { AccessRebusItem } from '../model/AccessRebusItem';
-import { getAccessRebusItems } from '../store/reducers/rebus';
+import { getAccessRebusItems, getRebus } from '../store/reducers/rebus';
 import {
   AccessRebusItem as AccessRebusItemAction,
   AddRebusItemSuccess,
   AddRebusItem,
 } from '../store/actions/index';
 import { PlusRebusItem } from '../model/PlusRebusItem';
+import { Rebus } from '../model/Rebus';
 
 @Component({
   selector: 'app-rebus-creator',
   templateUrl: './rebus-creator.component.html',
   styleUrls: ['./rebus-creator.component.scss'],
 })
-export class RebusCreatorComponent implements OnInit {
+export class RebusCreatorComponent implements OnInit, OnDestroy {
   isModalVisible = false;
+  password: string;
   nameModalComponent: string;
   accessRebustItems$: Observable<AccessRebusItem[]>;
+  getRebust$: Observable<Rebus>;
+  getRebustSubscription$: Subscription;
 
   constructor(private store: Store) {}
 
   ngOnInit(): void {
     this.store.dispatch(new AccessRebusItemAction());
     this.accessRebustItems$ = this.store.select(getAccessRebusItems);
+    this.getRebustSubscription$ = this.store
+      .select(getRebus)
+      .subscribe(({ password }) => {
+        this.password = password;
+      });
   }
 
   openModal(nameModalComponent: string): void {
-    this.isModalVisible = true;
-    this.nameModalComponent = nameModalComponent;
+    if (this.password !== '') {
+      this.isModalVisible = true;
+      this.nameModalComponent = nameModalComponent;
+    } else {
+      alert('nie dodano hasla');
+    }
   }
 
   resetNameModal(): void {
@@ -54,9 +68,7 @@ export class RebusCreatorComponent implements OnInit {
     this.store.dispatch(new AddRebusItem({ rebusItem }));
   }
 
-  calculateClasses() {
-    // return {
-    //   'main-content': 'background-color: rgba(0, 0, 0, 0.4)',
-    // };
+  ngOnDestroy(): void {
+    this.getRebustSubscription$.unsubscribe();
   }
 }

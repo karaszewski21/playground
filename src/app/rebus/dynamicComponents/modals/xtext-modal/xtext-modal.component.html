@@ -1,8 +1,11 @@
 <div class="modal-content">
-  <p>Dodaj tekst do skreslenia</p>
-  <input type="text" [formControl]="textControl" />
-  <button (click)="addXTextRebusItemAndCloseModal()">
+  <input
+    placeholder="tekst do przekreslenia"
+    type="text"
+    [formControl]="textControl"
+  />
+  <strike>{{ strikeText }}</strike>
+  <button class="button-modal" (click)="addXTextRebusItemAndCloseModal()">
     Dodaj skreslony tekst
   </button>
-  <strike>{{ strikeText }}</strike>
 </div>

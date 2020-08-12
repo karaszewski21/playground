@@ -25,8 +25,8 @@ export class RebusVerifyComponent implements OnInit, OnDestroy {
           .pipe(debounceTime(1000))
           .subscribe((checkedPassword) => {
             password === checkedPassword
-              ? console.log('poprawne')
-              : console.log('nie poprawne');
+              ? alert('Haslo zostalo odgadniete')
+              : alert('Niepoprawne haslo, sprobuj ponownie');
           });
       });
   }
