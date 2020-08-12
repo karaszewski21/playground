@@ -4,11 +4,11 @@ This project was created with Angular version 10.0.2.
 
 ### Crossword
 
-![crossword preview](/images/logo.png)
+![crossword preview](https://playground-karaszewski.herokuapp.com/assets/crossword.png)
 
 ### Rebus
 
-![crossword preview](/images/logo.png)
+![crossword preview](https://playground-karaszewski.herokuapp.com/assets/rebus.png)
 
 ### Demo page
 
